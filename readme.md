@@ -69,7 +69,7 @@ my_py_pkg/
 ```
 ### 1.4 Your First Python Node 
 Create my_py_pkg/my_py_pkg/my_first_node.py:
-```
+```python
 import rclpy
 from rclpy.node import Node
 
@@ -105,4 +105,66 @@ entry_points={
     ],
 },
 ```
+### 1.5 Your First Cpp Node
+
+```bash
+cd ~/ros2_course_ws/src
+ros2 pkg create --build-type ament_cmake my_cpp_pkg --dependencies rclcpp
+```
+Create my_cpp_pkg/src/my_first_node.cpp:
+
+```Cpp
+#include <chrono>
+#include <functional>
+#include <memory>
+
+#include "rclcpp/rclcpp.hpp"
+
+class MyFirstNode : public rclcpp::Node {
+public:
+    MyFirstNode() : Node("my_first_node"), counter_(0) {
+        RCLCPP_INFO(get_logger(), "Hello from my first C++ ROS 2 node!");
+        timer_ = create_wall_timer(
+            std::chrono::seconds(1),
+            std::bind(&MyFirstNode::timerCallback, this));
+    }
+
+private:
+    void timerCallback() {
+        counter_++;
+        RCLCPP_INFO(get_logger(), "Timer fired %d times", counter_);
+    }
+
+    rclcpp::TimerBase::SharedPtr timer_;
+    int counter_;
+};
+
+int main(int argc, char** argv) {
+    rclcpp::init(argc, argv);
+    auto node = std::make_shared<MyFirstNode>();
+    rclcpp::spin(node);
+    rclcpp::shutdown();
+    return 0;
+}
+```
+
+Update CMakeLists.txt:
+```cmake
+add_executable(my_first_node src/my_first_node.cpp)
+ament_target_dependencies(my_first_node rclcpp)
+install(TARGETS my_first_node DESTINATION lib/${PROJECT_NAME})
+```
+### 1.6 Build and run pkg
+```bash
+cd ~/ros2_course_ws
+colcon build --packages-select my_py_pkg my_cpp_pkg
+source install/setup.bash
+
+ros2 run my_py_pkg my_first_node
+# In another terminal:
+ros2 run my_cpp_pkg my_first_node
+```
+### Activity 1
+> Create a node called `robot_news_station` that publishes a "news ticker" string every 0.5 seconds using a timer. The string should include the node name and a counter. Build and run it, verify the output with `ros2 node list` and `ros2 node info /robot_news_station`.
+
 

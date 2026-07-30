@@ -1,0 +1,2 @@
+Invoking command in '/home/lunog/ros2_course_ws/build/activity1': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/lunog/ros2_course_ws/install/my_py_pkg:/opt/ros/humble /usr/bin/cmake --build /home/lunog/ros2_course_ws/build/activity1 -- -j16 -l16
+Invoked command in '/home/lunog/ros2_course_ws/build/activity1' returned '2': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/lunog/ros2_course_ws/install/my_py_pkg:/opt/ros/humble /usr/bin/cmake --build /home/lunog/ros2_course_ws/build/activity1 -- -j16 -l16

@@ -1,0 +1,10 @@
+/home/lunog/ros2_course_ws/build/activity1/CMakeFiles/uninstall.dir
+/home/lunog/ros2_course_ws/build/activity1/CMakeFiles/activity1_uninstall.dir
+/home/lunog/ros2_course_ws/build/activity1/CMakeFiles/robot_new_station.dir
+/home/lunog/ros2_course_ws/build/activity1/CMakeFiles/test.dir
+/home/lunog/ros2_course_ws/build/activity1/CMakeFiles/edit_cache.dir
+/home/lunog/ros2_course_ws/build/activity1/CMakeFiles/rebuild_cache.dir
+/home/lunog/ros2_course_ws/build/activity1/CMakeFiles/list_install_components.dir
+/home/lunog/ros2_course_ws/build/activity1/CMakeFiles/install.dir
+/home/lunog/ros2_course_ws/build/activity1/CMakeFiles/install/local.dir
+/home/lunog/ros2_course_ws/build/activity1/CMakeFiles/install/strip.dir
