@@ -167,4 +167,56 @@ ros2 run my_cpp_pkg my_first_node
 ### Activity 1
 > Create a node called `robot_news_station` that publishes a "news ticker" string every 0.5 seconds using a timer. The string should include the node name and a counter. Build and run it, verify the output with `ros2 node list` and `ros2 node info /robot_news_station`.
 
+node
+```cpp
+#include <chrono>
+#include <functional>
+#include <memory>
 
+#include "rclcpp/rclcpp.hpp"
+#include "std_msgs/msg/string.hpp"
+
+class RobotNewStation : public rclcpp::Node{
+public:
+    RobotNewStation():Node("robot_new_station"), counter_(0){
+        publisher_ = this -> create_publisher<std_msgs::msg::String>("new_ticker", 10);
+        timer_ = create_wall_timer(
+            std::chrono::milliseconds(500),
+            std::bind(&RobotNewStation::timerCallback, this));
+    }
+private:
+    void timerCallback() {
+        counter_++;
+        auto message = std_msgs::msg::String();
+        message.data = "robot_new_station: " + std::to_string(counter_);
+        publisher_ -> publish(message);
+        
+    }
+    rclcpp::TimerBase::SharedPtr timer_;
+    rclcpp::Publisher<std_msgs::msg::String>::SharedPtr publisher_;
+    int counter_;
+};
+int main(int argc, char **argv){
+    rclcpp::init(argc, argv);
+    auto node = std::make_shared<RobotNewStation>();
+    rclcpp::spin(node);
+    rclcpp::shutdown();
+    return 0;
+}
+```
+```bash
+#terminal 1
+ros2 run activity1 robot_new_station
+#terminal 2
+ros2 node list
+/robot_new_station
+ros2 node info /robot_new_station
+ros2 echo topic /robot_new_station
+#result
+#data: 'robot_new_station: 274'
+#---
+```
+
+## Module 2 - Topic & Communications
+
+### 2.1  Publisher/Subscriber Architecture
