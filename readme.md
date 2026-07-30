@@ -220,3 +220,22 @@ ros2 echo topic /robot_new_station
 ## Module 2 - Topic & Communications
 
 ### 2.1  Publisher/Subscriber Architecture
+
+```
+Publisher Node ──[/topic_name: MsgType]──► Subscriber Node
+               ──[/topic_name: MsgType]──► Subscriber Node 2
+```
+- Many publishers → one topic → many subscribers
+- Decoupled: publisher doesn't know who subscribes
+- Asynchronous: non-blocking
+
+### 2.2 Python Publisher
+```
+Publisher Node ──[/topic_name: MsgType]──► Subscriber Node
+               ──[/topic_name: MsgType]──► Subscriber Node 2
+```
+
+- Many publishers → one topic → many subscribers
+- Decoupled: publisher doesn't know who subscribes
+- Asynchronous: non-blocking
+
