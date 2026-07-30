@@ -18,14 +18,17 @@ ROS 2 is a middleware framework for robot software. It provides:
 - **Hardware abstraction** through a driver ecosystems
 - **Tools** for visualization, debugging, simulation
 - **Build system** colcon and ament for managing packages
+
+
 Key differences from ROS 1:
 | ROS1 | ROS2|
 |------|-----|
-|roscore required|no master required|
-|TCP/IP custom|DDS|
-|Python 2/3 mixed|Python3.10(humble), Python3.12(jazzy)|
-|No security|SROS2 security|
-|Ubuntu 20.04 max|Ubuntu22.04(humble), Ubuntu24.04(jazzy)|
+| roscore required | no master required |
+| TCP/IP custom | DDS |
+| Python 2/3 mixed | Python3.10(humble), Python3.12(jazzy) |
+| No security | SROS2 security |
+| Ubuntu 20.04 max | Ubuntu22.04(humble), Ubuntu24.04(jazzy) |
+
 ### 1.2  ROS 2 Graph Concepts
 
 ```
@@ -45,3 +48,25 @@ Key differences from ROS 1:
 - **Service**: synchronous request/response call 
 - **Action**: asynchronous goal with feedback and result
 - **Parameter**: configurable value stored per-node
+
+### 1.3 Create a python packages
+
+```bash
+cd ros2_course_ws/src
+ros2 pkg create --build-type ament_python my_py_pkg --dependencies rclpy
+```
+Package structure:
+```
+my_py_pkg/
+├── my_py_pkg/
+│   ├── __init__.py
+│   └── my_first_node.py   ← your code goes here
+├── package.xml
+├── resource/
+│   └── my_py_pkg
+├── setup.cfg
+└── setup.py
+```
+### 1.4 Your First Python Node
+
+

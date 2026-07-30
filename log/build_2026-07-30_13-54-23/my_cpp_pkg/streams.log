@@ -1,0 +1,68 @@
+[0.012s] Invoking command in '/home/lunog/ros2_course_ws/build/my_cpp_pkg': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/lunog/ros2_course_ws/install/my_py_pkg:/opt/ros/humble /usr/bin/cmake /home/lunog/ros2_course_ws/src/my_cpp_pkg -DCMAKE_INSTALL_PREFIX=/home/lunog/ros2_course_ws/install/my_cpp_pkg
+[0.060s] -- The C compiler identification is GNU 11.4.0
+[0.107s] -- The CXX compiler identification is GNU 11.4.0
+[0.114s] -- Detecting C compiler ABI info
+[0.178s] -- Detecting C compiler ABI info - done
+[0.183s] -- Check for working C compiler: /usr/bin/cc - skipped
+[0.183s] -- Detecting C compile features
+[0.184s] -- Detecting C compile features - done
+[0.186s] -- Detecting CXX compiler ABI info
+[0.261s] -- Detecting CXX compiler ABI info - done
+[0.266s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[0.266s] -- Detecting CXX compile features
+[0.266s] -- Detecting CXX compile features - done
+[0.268s] -- Found ament_cmake: 1.3.13 (/opt/ros/humble/share/ament_cmake/cmake)
+[0.395s] -- Found Python3: /usr/bin/python3 (found version "3.10.12") found components: Interpreter 
+[0.472s] -- Found rclcpp: 16.0.18 (/opt/ros/humble/share/rclcpp/cmake)
+[0.512s] -- Found rosidl_generator_c: 3.1.8 (/opt/ros/humble/share/rosidl_generator_c/cmake)
+[0.516s] -- Found rosidl_adapter: 3.1.8 (/opt/ros/humble/share/rosidl_adapter/cmake)
+[0.524s] -- Found rosidl_generator_cpp: 3.1.8 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)
+[0.534s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[0.548s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[0.585s] -- Found rmw_implementation_cmake: 6.1.2 (/opt/ros/humble/share/rmw_implementation_cmake/cmake)
+[0.589s] -- Found rmw_fastrtps_cpp: 6.2.10 (/opt/ros/humble/share/rmw_fastrtps_cpp/cmake)
+[0.675s] -- Found OpenSSL: /usr/lib/x86_64-linux-gnu/libcrypto.so (found version "3.0.2")  
+[0.706s] -- Found FastRTPS: /opt/ros/humble/include  
+[0.754s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[0.762s] -- Looking for pthread.h
+[0.831s] -- Looking for pthread.h - found
+[0.831s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+[0.900s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+[0.901s] -- Found Threads: TRUE  
+[0.942s] -- Found ament_lint_auto: 0.12.15 (/opt/ros/humble/share/ament_lint_auto/cmake)
+[1.004s] -- Added test 'cppcheck' to perform static code analysis on C / C++ code
+[1.004s] -- Configured cppcheck include dirs: 
+[1.004s] -- Configured cppcheck exclude dirs and/or files: 
+[1.005s] -- Added test 'lint_cmake' to check CMake code style
+[1.006s] -- Added test 'uncrustify' to check C / C++ code style
+[1.006s] -- Configured uncrustify additional arguments: 
+[1.006s] -- Added test 'xmllint' to check XML markup files
+[1.008s] -- Configuring done
+[1.014s] -- Generating done
+[1.017s] -- Build files have been written to: /home/lunog/ros2_course_ws/build/my_cpp_pkg
+[1.026s] Invoked command in '/home/lunog/ros2_course_ws/build/my_cpp_pkg' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/lunog/ros2_course_ws/install/my_py_pkg:/opt/ros/humble /usr/bin/cmake /home/lunog/ros2_course_ws/src/my_cpp_pkg -DCMAKE_INSTALL_PREFIX=/home/lunog/ros2_course_ws/install/my_cpp_pkg
+[1.028s] Invoking command in '/home/lunog/ros2_course_ws/build/my_cpp_pkg': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/lunog/ros2_course_ws/install/my_py_pkg:/opt/ros/humble /usr/bin/cmake --build /home/lunog/ros2_course_ws/build/my_cpp_pkg -- -j16 -l16
+[1.076s] [ 50%] [32mBuilding CXX object CMakeFiles/my_first_node.dir/src/my_first_node.cpp.o[0m
+[3.293s] [100%] [32m[1mLinking CXX executable my_first_node[0m
+[3.401s] [100%] Built target my_first_node
+[3.412s] Invoked command in '/home/lunog/ros2_course_ws/build/my_cpp_pkg' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/lunog/ros2_course_ws/install/my_py_pkg:/opt/ros/humble /usr/bin/cmake --build /home/lunog/ros2_course_ws/build/my_cpp_pkg -- -j16 -l16
+[3.421s] Invoking command in '/home/lunog/ros2_course_ws/build/my_cpp_pkg': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/lunog/ros2_course_ws/install/my_py_pkg:/opt/ros/humble /usr/bin/cmake --install /home/lunog/ros2_course_ws/build/my_cpp_pkg
+[3.428s] -- Install configuration: ""
+[3.428s] -- Installing: /home/lunog/ros2_course_ws/install/my_cpp_pkg/share/ament_index/resource_index/package_run_dependencies/my_cpp_pkg
+[3.428s] -- Installing: /home/lunog/ros2_course_ws/install/my_cpp_pkg/share/ament_index/resource_index/parent_prefix_path/my_cpp_pkg
+[3.428s] -- Installing: /home/lunog/ros2_course_ws/install/my_cpp_pkg/share/my_cpp_pkg/environment/ament_prefix_path.sh
+[3.429s] -- Installing: /home/lunog/ros2_course_ws/install/my_cpp_pkg/share/my_cpp_pkg/environment/ament_prefix_path.dsv
+[3.429s] -- Installing: /home/lunog/ros2_course_ws/install/my_cpp_pkg/share/my_cpp_pkg/environment/path.sh
+[3.429s] -- Installing: /home/lunog/ros2_course_ws/install/my_cpp_pkg/share/my_cpp_pkg/environment/path.dsv
+[3.429s] -- Installing: /home/lunog/ros2_course_ws/install/my_cpp_pkg/share/my_cpp_pkg/local_setup.bash
+[3.429s] -- Installing: /home/lunog/ros2_course_ws/install/my_cpp_pkg/share/my_cpp_pkg/local_setup.sh
+[3.429s] -- Installing: /home/lunog/ros2_course_ws/install/my_cpp_pkg/share/my_cpp_pkg/local_setup.zsh
+[3.429s] -- Installing: /home/lunog/ros2_course_ws/install/my_cpp_pkg/share/my_cpp_pkg/local_setup.dsv
+[3.429s] -- Installing: /home/lunog/ros2_course_ws/install/my_cpp_pkg/share/my_cpp_pkg/package.dsv
+[3.430s] -- Installing: /home/lunog/ros2_course_ws/install/my_cpp_pkg/share/ament_index/resource_index/packages/my_cpp_pkg
+[3.430s] -- Installing: /home/lunog/ros2_course_ws/install/my_cpp_pkg/share/my_cpp_pkg/cmake/my_cpp_pkgConfig.cmake
+[3.430s] -- Installing: /home/lunog/ros2_course_ws/install/my_cpp_pkg/share/my_cpp_pkg/cmake/my_cpp_pkgConfig-version.cmake
+[3.430s] -- Installing: /home/lunog/ros2_course_ws/install/my_cpp_pkg/share/my_cpp_pkg/package.xml
+[3.430s] -- Installing: /home/lunog/ros2_course_ws/install/my_cpp_pkg/lib/my_cpp_pkg/my_first_node
+[3.431s] -- Set runtime path of "/home/lunog/ros2_course_ws/install/my_cpp_pkg/lib/my_cpp_pkg/my_first_node" to ""
+[3.433s] Invoked command in '/home/lunog/ros2_course_ws/build/my_cpp_pkg' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/lunog/ros2_course_ws/install/my_py_pkg:/opt/ros/humble /usr/bin/cmake --install /home/lunog/ros2_course_ws/build/my_cpp_pkg
