@@ -67,6 +67,42 @@ my_py_pkg/
 ├── setup.cfg
 └── setup.py
 ```
-### 1.4 Your First Python Node
+### 1.4 Your First Python Node 
+Create my_py_pkg/my_py_pkg/my_first_node.py:
+```
+import rclpy
+from rclpy.node import Node
 
+
+class MyFirstNode(Node):
+    def __init__(self):
+        super().__init__("my_first_node")
+        self.get_logger().info("Hello from my first ROS 2 node!")
+        self.counter = 0
+        self.create_timer(1.0, self.timer_callback)
+
+    def timer_callback(self):
+        self.counter += 1
+        self.get_logger().info(f"Timer fired {self.counter} times")
+
+
+def main(args=None):
+    rclpy.init(args=args)
+    node = MyFirstNode()
+    rclpy.spin(node)
+    rclpy.shutdown()
+
+
+if __name__ == "__main__":
+    main()
+```
+
+Register the entry point in setup.py:
+```
+entry_points={
+    "console_scripts": [
+        "my_first_node = my_py_pkg.my_first_node:main",
+    ],
+},
+```
 
