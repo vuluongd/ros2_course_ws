@@ -1,0 +1,14 @@
+# ROS 2 Build và Install
+build/
+install/
+log/
+
+# Thư mục phụ thuộc của Python (nếu có dùng gói Python)
+.pytest_cache/
+__pycache__/
+*.pyc
+
+# Tệp cấu hình hoặc bộ nhớ tạm của hệ thống / IDE
+.DS_Store
+.vscode/
+.idea/

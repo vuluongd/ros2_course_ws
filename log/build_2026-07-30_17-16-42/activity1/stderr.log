@@ -1,7 +1,0 @@
-[01m[K/home/lunog/ros2_course_ws/src/activity1/src/robot_new_station.cpp:[m[K In member function ‘[01m[Kvoid RobotNewStation::timerCallback()[m[K’:
-[01m[K/home/lunog/ros2_course_ws/src/activity1/src/robot_new_station.cpp:21:5:[m[K [01;31m[Kerror: [m[Kexpected ‘[01m[K;[m[K’ before ‘[01m[K}[m[K’ token
-   21 |     [01;31m[K}[m[K
-      |     [01;31m[K^[m[K
-gmake[2]: *** [CMakeFiles/robot_new_station.dir/build.make:76: CMakeFiles/robot_new_station.dir/src/robot_new_station.cpp.o] Error 1
-gmake[1]: *** [CMakeFiles/Makefile2:137: CMakeFiles/robot_new_station.dir/all] Error 2
-gmake: *** [Makefile:146: all] Error 2
