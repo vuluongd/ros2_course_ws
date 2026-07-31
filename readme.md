@@ -375,4 +375,21 @@ install(TARGETS
   smartphone
   DESTINATION lib/${PROJECT_NAME})
 ```
-### 2.6 
+### 2.6 Topic CLI commands
+```bash
+ros2 topic list                          # list all active topics
+ros2 topic info /robot_news              # publisher/subscriber count & type
+ros2 topic echo /robot_news              # print messages in terminal
+ros2 topic hz /robot_news                # measure publish rate
+ros2 topic bw /robot_news                # measure bandwidth
+ros2 topic pub /robot_news std_msgs/msg/String "data: 'hello'"
+```
+### 2.7 Common message types
+
+| Package | Message | Use |
+|---------|---------|-----|
+| `std_msgs` | `String`, `Int32`, `Float64`, `Bool` | Simple data |
+| `geometry_msgs` | `Twist`, `Pose`, `Point`, `Quaternion` | Robot motion |
+| `sensor_msgs` | `LaserScan`, `Image`, `Imu`, `JointState` | Sensor data |
+| `nav_msgs` | `Odometry`, `Path`, `OccupancyGrid` | Navigation |
+
