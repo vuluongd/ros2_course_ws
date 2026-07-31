@@ -393,3 +393,31 @@ ros2 topic pub /robot_news std_msgs/msg/String "data: 'hello'"
 | `sensor_msgs` | `LaserScan`, `Image`, `Imu`, `JointState` | Sensor data |
 | `nav_msgs` | `Odometry`, `Path`, `OccupancyGrid` | Navigation |
 
+### 2.8 Custom Message (Interface)
+Create a package for interfaces:
+```bash
+ros2 pkg create my_robot_interfaces --build-type ament_cmake
+mkdir -p my_robot_interfaces/msg
+```
+
+Create `msg/HardwareStatus.msg`:
+```
+int64 temperature
+bool are_motors_ready
+string debug_message
+```
+
+Update `CMakeLists.txt`:
+```cmake
+find_package(rosidl_default_generators REQUIRED)
+rosidl_generate_interfaces(${PROJECT_NAME}
+  "msg/HardwareStatus.msg"
+)
+```
+
+Add to `package.xml`:
+```xml
+<buildtool_depend>rosidl_default_generators</buildtool_depend>
+<exec_depend>rosidl_default_runtime</exec_depend>
+<member_of_group>rosidl_interface_packages</member_of_group>
+```
