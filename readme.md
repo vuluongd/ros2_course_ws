@@ -229,3 +229,150 @@ Publisher Node ──[/topic_name: MsgType]──► Subscriber Node
 - Decoupled: publisher doesn't know who subscribes
 - Asynchronous: non-blocking
 
+### 2.2 Python Publisher
+```python
+import rclpy
+from rclpy.node import Node
+from std_msgs.msg import String
+
+
+class RobotNewsStation(Node):
+    def __init__(self):
+        super().__init__("robot_news_station")
+        self.pub_ = self.create_publisher(String, "robot_news", 10)
+        self.timer = self.create_timer(0.5, self.publish_news)
+        self.get_logger().info("Robot News Station started")
+
+    def publish_news(self):
+        msg = String()
+        msg.data = "Breaking news from" + self.get_name()
+        self.pub_.publish(msg)
+
+def main(args=None):
+    rclpy.init(args=args)
+    node = RobotNewsStation()
+    rclpy.spin(node)
+    rclpy.shutdown()
+
+
+if __name__ =="__main__":
+    main()
+```
+### 2.3 Python Subscriber
+```python
+import rclpy
+from rclpy.node import Node
+from std_msgs.msg import String
+
+class SmartPhone(Node):
+    def __init__(self):
+        super().__init__("smartphone")
+        self.sub = self.create_subscription(String, "robot_news", self.callback_robot_news, 10)
+
+    def callback_robot_news(self, msg: String):
+        self.get_logger().info(f"Received: {msg.data}")
+
+def main(args=None):
+    rclpy.init(args=args)
+    node = SmartPhone()
+    rclpy.spin(node)
+    rclpy.shutdown()
+
+if __name__ =="__main__":
+    main()
+```
+Add both Python nodes to the existing console_scripts list in setup.py, and add <depend>std_msgs</depend> to package.xml:
+
+```
+entry_points={
+    "console_scripts": [
+        "robot_news_station = my_py_pkg.robot_news_station:main",
+        "smartphone = my_py_pkg.smartphone:main",
+    ],
+},
+```
+### 2.4 C++ Publisher
+```
+#include <chrono>
+#include <functional>
+#include <memory>
+#include <string>
+
+#include "rclcpp/rclcpp.hpp"
+#include "std_msgs/msg/string.hpp"
+
+class RobotNewsStation : public rclcpp::Node {
+public:
+    RobotNewsStation(): rclcpp::Node("robot_news_station"), counter_(0){
+        pub_ = this -> create_publisher<std_msgs::msg::String>("robot_news", 10);
+        timer_ = create_wall_timer (
+            std::chrono::milliseconds(500),
+            std::bind(&RobotNewsStation::timerCallback, this));
+    }
+private:
+    void timerCallback() {
+        counter_++;
+        auto msg = std_msgs::msg::String();
+        msg.data = "New from" + std::string(get_name());
+        pub_ -> publish(msg);
+    }
+    rclcpp::TimerBase::SharedPtr timer_;
+    rclcpp::Publisher<std_msgs::msg::String>::SharedPtr pub_;
+    int counter_;
+};
+int main(int argc, char **argv){
+    rclcpp::init(argc, argv);
+    auto node = std::make_shared<RobotNewsStation>();
+    rclcpp::spin(node);
+    rclcpp::shutdown();
+
+}
+```
+### 2.5 C++ Subscriber
+```
+#include <chrono>
+#include <functional>
+#include <memory>
+#include <string>
+#include "rclcpp/rclcpp.hpp"
+#include "std_msgs/msg/string.hpp"
+
+class SmartphoneNode : public rclcpp::Node {
+public:
+    SmartphoneNode() : rclcpp::Node("smartphone"){
+        sub_ = this -> create_subscription<std_msgs::msg::String>(
+            "robot_news", 10,
+            std::bind(&SmartphoneNode::callbackRobotNews, this, std::placeholders::_1));
+    }
+private:
+    void callbackRobotNews(const std_msgs::msg::String::SharedPtr msg) {
+        RCLCPP_INFO(get_logger(), "Received: %s", msg->data.c_str());
+    }
+    rclcpp::Subscription<std_msgs::msg::String>::SharedPtr sub_;
+    
+};
+int main(int argc, char **argv){
+    rclcpp::init(argc, argv);
+    auto node = std::make_shared<SmartphoneNode>();
+    rclcpp::spin(node);
+    rclcpp::shutdown();
+    return 0;
+}
+```
+For the C++ package, add `<depend>std_msgs</depend>` to `package.xml`, then add these lines to `CMakeLists.txt`:
+
+```cmake
+find_package(std_msgs REQUIRED)
+
+add_executable(robot_news_station src/robot_news_station.cpp)
+ament_target_dependencies(robot_news_station rclcpp std_msgs)
+
+add_executable(smartphone src/smartphone.cpp)
+ament_target_dependencies(smartphone rclcpp std_msgs)
+
+install(TARGETS
+  robot_news_station
+  smartphone
+  DESTINATION lib/${PROJECT_NAME})
+```
+### 2.6 
