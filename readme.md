@@ -292,7 +292,7 @@ entry_points={
 },
 ```
 ### 2.4 C++ Publisher
-```
+```cpp
 #include <chrono>
 #include <functional>
 #include <memory>
@@ -329,7 +329,7 @@ int main(int argc, char **argv){
 }
 ```
 ### 2.5 C++ Subscriber
-```
+```cpp
 #include <chrono>
 #include <functional>
 #include <memory>
