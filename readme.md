@@ -421,3 +421,5 @@ Add to `package.xml`:
 <exec_depend>rosidl_default_runtime</exec_depend>
 <member_of_group>rosidl_interface_packages</member_of_group>
 ```
+### Activity 2
+> Build a number publisher that sends integers from 1 to 100 on `/number` at 1 Hz, and a counter subscriber that accumulates the sum and publishes it on `/number_count`. Run both nodes and verify the count is increasing correctly.
