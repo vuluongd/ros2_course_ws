@@ -1,10 +1,66 @@
 {
+  "python.defaultInterpreterPath": "/usr/bin/python3",
+  "python.analysis.extraPaths": [
+    "${workspaceFolder}/install/my_py_pkg/lib/python3.10/site-packages",
+    "${workspaceFolder}/install/my_robot_interfaces/lib/python3.10/site-packages",
+    "/opt/ros/humble/lib/python3.10/site-packages"
+  ],
+  "python.autoComplete.extraPaths": [
+    "${workspaceFolder}/install/my_py_pkg/lib/python3.10/site-packages",
+    "${workspaceFolder}/install/my_robot_interfaces/lib/python3.10/site-packages",
+    "/opt/ros/humble/lib/python3.10/site-packages"
+  ],
+  "C_Cpp.default.includePath": [
+    "${workspaceFolder}/**",
+    "/opt/ros/humble/include/**",
+    "/opt/ros/humble/include/rclcpp/**",
+    "/opt/ros/humble/include/rcl/**",
+    "/opt/ros/humble/include/rcutils/**",
+    "/opt/ros/humble/include/rmw/**",
+    "/opt/ros/humble/include/std_msgs/**",
+    "/opt/ros/humble/include/geometry_msgs/**",
+    "/opt/ros/humble/include/builtin_interfaces/**",
+    "/opt/ros/humble/include/rosidl_runtime_cpp/**",
+    "${workspaceFolder}/install/**/include/**"
+  ],
+  "C_Cpp.default.defines": [],
+  "C_Cpp.default.compilerPath": "/usr/bin/g++",
+  "C_Cpp.default.cStandard": "c17",
+  "C_Cpp.default.cppStandard": "c++17",
+  "C_Cpp.default.intelliSenseMode": "linux-gcc-x64",
+  "C_Cpp.default.compileCommands": "${workspaceFolder}/build/compile_commands.json",
+  "files.associations": {
+    "*.hpp": "cpp",
+    "*.h": "cpp",
+    "*.msg": "plaintext",
+    "*.srv": "plaintext",
+    "*.action": "plaintext",
+    "*.launch.py": "python"
+  },
+  "editor.formatOnSave": true,
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "files.exclude": {
+    "**/build": true,
+    "**/install": true,
+    "**/log": true,
+    "**/.pytest_cache": true,
+    "**/__pycache__": true
+  },
+  "search.exclude": {
+    "**/build": true,
+    "**/install": true,
+    "**/log": true
+  },
+  "terminal.integrated.env.linux": {
+    "ROS_DISTRO": "humble"
+  },
+  "C_Cpp_Runner.msvcBatchPath": "",
   "C_Cpp_Runner.cCompilerPath": "gcc",
   "C_Cpp_Runner.cppCompilerPath": "g++",
   "C_Cpp_Runner.debuggerPath": "gdb",
   "C_Cpp_Runner.cStandard": "",
   "C_Cpp_Runner.cppStandard": "",
-  "C_Cpp_Runner.msvcBatchPath": "",
   "C_Cpp_Runner.useMsvc": false,
   "C_Cpp_Runner.warnings": [
     "-Wall",
@@ -55,5 +111,6 @@
   "C_Cpp_Runner.useLeakSanitizer": false,
   "C_Cpp_Runner.showCompilationTime": false,
   "C_Cpp_Runner.useLinkTimeOptimization": false,
-  "C_Cpp_Runner.msvcSecureNoWarnings": false
+  "C_Cpp_Runner.msvcSecureNoWarnings": false,
+  "ROS2.distro": "humble"
 }
