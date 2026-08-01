@@ -5,36 +5,57 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
 endif()
 
-# find dependencies
+# Find dependencies
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
-find_package(std_msgs REQUIEED)
+find_package(std_msgs REQUIRED)
+find_package(my_robot_interfaces REQUIRED)
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
-  # the following line skips the linter which checks for copyrights
-  # comment the line when a copyright and license is added to all source files
   set(ament_cmake_copyright_FOUND TRUE)
-  # the following line skips cpplint (only works in a git repo)
-  # comment the line when this package is in a git repo and when
-  # a copyright and license is added to all source files
   set(ament_cmake_cpplint_FOUND TRUE)
   ament_lint_auto_find_test_dependencies()
 endif()
 
+# Nodes
 add_executable(my_first_node src/my_first_node.cpp)
-ament_target_dependencies(my_first_node rclcpp)
-install(TARGETS my_first_node DESTINATION lib/${PROJECT_NAME})
-find_package(std_msgs REQUIRED)
+ament_target_dependencies(my_first_node
+  rclcpp
+)
 
 add_executable(robot_news_station src/robot_news_station.cpp)
-ament_target_dependencies(robot_news_station rclcpp std_msgs)
+ament_target_dependencies(robot_news_station
+  rclcpp
+  std_msgs
+)
 
 add_executable(smartphone src/smartphone.cpp)
-ament_target_dependencies(smartphone rclcpp std_msgs)
+ament_target_dependencies(smartphone
+  rclcpp
+  std_msgs
+)
 
+add_executable(service_server src/service_server.cpp)
+ament_target_dependencies(service_server
+  rclcpp
+  my_robot_interfaces
+)
+
+add_executable(service_client src/service_client.cpp)
+ament_target_dependencies(service_client
+  rclcpp
+  my_robot_interfaces
+)
+
+# Install
 install(TARGETS
+  my_first_node
   robot_news_station
   smartphone
-  DESTINATION lib/${PROJECT_NAME})
+  service_server
+  service_client
+  DESTINATION lib/${PROJECT_NAME}
+)
+
 ament_package()

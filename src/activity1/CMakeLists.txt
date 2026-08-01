@@ -21,7 +21,7 @@ if(BUILD_TESTING)
   ament_lint_auto_find_test_dependencies()
 endif()
 
-ament_package()
 add_executable(robot_new_station src/robot_new_station.cpp)
 ament_target_dependencies(robot_new_station rclcpp std_msgs)
 install(TARGETS robot_new_station DESTINATION lib/${PROJECT_NAME})
+ament_package()

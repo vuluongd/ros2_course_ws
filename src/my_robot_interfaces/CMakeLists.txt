@@ -23,8 +23,9 @@ if(BUILD_TESTING)
   ament_lint_auto_find_test_dependencies()
 endif()
 
-ament_package()
 find_package(rosidl_default_generators REQUIRED)
 rosidl_generate_interfaces(${PROJECT_NAME}
   "msg/HardwareStatus.msg"
+  "srv/AddTwoInts.srv"
 )
+ament_package()

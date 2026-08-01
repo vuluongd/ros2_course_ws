@@ -423,3 +423,182 @@ Add to `package.xml`:
 ```
 ### Activity 2
 > Build a number publisher that sends integers from 1 to 100 on `/number` at 1 Hz, and a counter subscriber that accumulates the sum and publishes it on `/number_count`. Run both nodes and verify the count is increasing correctly.
+
+## Module 3 -Service & parameters
+
+### 3.1 Topic & Service
+| | Topic | Service |
+|-| ----- | ------- |
+| Pattern | Publish/ Subcribe | Resquet / Respond |
+| Direction | One-way | Two - way |
+| Timing | Async, Continous | Sync, on - demand |
+| Use case | Sensor streams, commands | Configuration, one-off actions |
+
+### 3.2 Custom service definition
+
+Create `srv/AddTwoInts.srv` in your interfaces package:
+```bash
+mkdir -p my_robot_interfaces/srv
+```
+
+```
+int64 a
+int64 b
+---
+int64 sum
+```
+
+Register it in `CMakeLists.txt`:
+```cmake
+rosidl_generate_interfaces(${PROJECT_NAME}
+  "msg/HardwareStatus.msg"
+  "srv/AddTwoInts.srv"
+)
+```
+### 3.3 Python Service Server
+```python
+import rclpy
+from rclpy.node import Node
+from my_robot_interfaces.srv import AddTwoInts
+
+class AddTwoIntsServer(Node):
+    def __init__(self):
+        super().__init__("add_two_init_server")
+        self.server_ = self.create_service(AddTwoInts, "add_two_ints", self.callback_add_two_ints)
+        self.get_logger().info("Add Two Ints server started")
+
+    def callback_add_two_ints(self, request, respone):
+        respone.sum = request.a + request.b
+        self.get_logger().info(f"{request.a} + {request.b} = {respone.sum}")
+        return respone
+    
+def main(args = None):
+    rclpy.init(args=args)
+    rclpy.spin(AddTwoIntsServer())
+    rclpy.shutdown()
+
+if __name__ =="__main__":
+    main()
+```
+
+### 3.4 Python Service Client
+```python
+import rclpy
+from rclpy.node import Node
+from my_robot_interfaces.srv import AddTwoInts
+from functools import partial
+
+
+class AddTwoIntsClient(Node):
+    def __init__(self):
+        super().__init__("add_two_ints_client")
+        self.call_add_two_ints(3, 4)
+
+    def call_add_two_ints(self, a, b):
+        client = self.create_client(AddTwoInts, "add_two_ints")
+        while not client.wait_for_service(timeout_sec =1.0):
+            self.get_logger().warn("Waiting for the server.....")
+        request = AddTwoInts.Request()
+        request.a = a
+        request.b = b
+        future = client.call_async(request)
+        future.add_done_callback(partial(self.callback_call, a=a, b=b))
+
+    def callback_call(self, future, a, b):
+        response = future.result()
+        self.get_logger().info(f"{a}+{b} = {response.sum}")
+
+def main(args = None):
+    rclpy.init(args=args)
+    rclpy.spin(AddTwoIntsClient())
+    rclpy.shutdown()
+
+if __name__ =="__main__":
+    main()
+```
+### 3.5 Cpp Service Server
+```cpp
+#include <cinttypes>
+#include <functional>
+#include <memory>
+#include "rclcpp/rclcpp.hpp"
+#include "my_robot_interfaces/srv/add_two_ints.hpp"
+
+class AddTwoIntsServer : public rclcpp::Node {
+public:
+    AddTwoIntsServer(): Node("add_two_ints_server") {
+        server_ = create_service<my_robot_interfaces::srv::AddTwoInts>(
+            "add_two_ints",
+            std::bind(&AddTwoIntsServer::callbackAddTwoInts, this, std::placeholders::_1, std::placeholders::_2));
+    }
+private:
+    void callbackAddTwoInts(
+        const my_robot_interfaces::srv::AddTwoInts::Request::SharedPtr req,
+        const my_robot_interfaces::srv::AddTwoInts::Response::SharedPtr res){
+        res->sum = req->a +req->b;
+        RCLCPP_INFO(get_logger(), "%" PRId64 " + %" PRId64 " =  %" PRId64, req->a, req->b, res->sum);
+        }
+        rclcpp::Service<my_robot_interfaces::srv::AddTwoInts>::SharedPtr server_;
+        
+};
+int main(int argc, char **argv){
+    rclcpp::init(argc, argv);
+    rclcpp::spin(std::make_shared<AddTwoIntsServer>());
+    rclcpp::shutdown();
+    return 0;
+}
+```
+### 3.6 Cpp service client
+```cpp
+#include <cinttypes>
+#include <functional>
+#include <chrono>
+#include <memory>
+#include "rclcpp/rclcpp.hpp"
+#include "my_robot_interfaces/srv/add_two_ints.hpp"
+
+class AddTwoIntsClient : public rclcpp::Node {
+public:
+    AddTwoIntsClient():Node("add_two_ints_client"){
+        client_ = create_client<my_robot_interfaces::srv::AddTwoInts>(
+            "add_two_ints");
+
+        while (!client_->wait_for_service(std::chrono::seconds(1))){
+             RCLCPP_WARN(this->get_logger(), "Waiting for server...");
+        }
+        send_request(3, 4);
+    }
+private:
+    void send_request(int64_t a, int64_t b){
+        auto request = std::make_shared<my_robot_interfaces::srv::AddTwoInts::Request>();
+
+        request->a = a;
+        request->b = b;
+
+        auto future = client_ -> async_send_request(
+            request,
+            std::bind(
+                &AddTwoIntsClient::response_callback,
+                this,
+                std::placeholders::_1));    
+    }
+    void response_callback(rclcpp::Client<my_robot_interfaces::srv::AddTwoInts>::SharedFuture future)
+    {
+        auto response = future.get();
+        RCLCPP_INFO(this->get_logger(), "Result = %ld", response->sum);
+        rclcpp::shutdown();
+    }
+    rclcpp::Client<my_robot_interfaces::srv::AddTwoInts>::SharedPtr client_;
+
+};
+
+int main(int argc, char **argv)
+{
+    rclcpp::init(argc, argv);
+
+    rclcpp::spin(std::make_shared<AddTwoIntsClient>());
+
+    rclcpp::shutdown();
+    return 0;
+}
+```
