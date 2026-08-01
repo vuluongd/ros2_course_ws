@@ -8,6 +8,7 @@ endif()
 # find dependencies
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
+find_package(std_msgs REQUIEED)
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
@@ -21,7 +22,6 @@ if(BUILD_TESTING)
   ament_lint_auto_find_test_dependencies()
 endif()
 
-ament_package()
 add_executable(my_first_node src/my_first_node.cpp)
 ament_target_dependencies(my_first_node rclcpp)
 install(TARGETS my_first_node DESTINATION lib/${PROJECT_NAME})
@@ -37,3 +37,4 @@ install(TARGETS
   robot_news_station
   smartphone
   DESTINATION lib/${PROJECT_NAME})
+ament_package()

@@ -22,7 +22,6 @@ if(BUILD_TESTING)
   ament_lint_auto_find_test_dependencies()
 endif()
 
-ament_package()
 add_executable(number_publisher src/number_publisher.cpp)
 ament_target_dependencies(number_publisher rclcpp std_msgs)
 add_executable(number_counter src/number_counter.cpp)
@@ -32,3 +31,6 @@ install(TARGETS
   number_publisher
   number_counter
   DESTINATION lib/${PROJECT_NAME})
+
+ament_package()
+
