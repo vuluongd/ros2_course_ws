@@ -112,5 +112,6 @@
   "C_Cpp_Runner.showCompilationTime": false,
   "C_Cpp_Runner.useLinkTimeOptimization": false,
   "C_Cpp_Runner.msvcSecureNoWarnings": false,
-  "ROS2.distro": "humble"
+  "ROS2.distro": "humble",
+  "cmake.sourceDirectory": "/home/lunog/ros2_course_ws/src/activity1"
 }
