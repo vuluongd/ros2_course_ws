@@ -1,10 +1,10 @@
 from launch import LaunchDescription
 from launch_ros.actions import Node
-from launch.actions import DeclareLaunchArguments
+from launch.actions import DeclareLaunchArgument
 from launch.substitutions import LaunchConfiguration
 
 def generate_launch_description():
-  robot_name_arg = DeclareLaunchArguments(
+  robot_name_arg = DeclareLaunchArgument(
     "robot_name",
     default_value = "my_robot",
     description = "Name of the robot")
