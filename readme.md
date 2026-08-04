@@ -900,3 +900,49 @@ colcon build --symlink-install   # Python: edits take effect without rebuild
 Activity 4
 
 Write a Python launch file that starts three nodes: `robot_news_station`, `smartphone`, and `add_two_ints_server`. Pass `robot_name` as a launch argument with default "CourseBot". Run it and verify all three nodes appear in ```bash ros2 node list```.
+
+```python
+from launch import LaunchDescription
+from launch_ros.actions import Node
+from launch.actions import DeclareLaunchArgument
+from launch.substitutions import LaunchConfiguration
+
+def generate_launch_description():
+  robot_name_arg = DeclareLaunchArgument(
+    "robot_name",
+    default_value= "my_robot",
+    description ="Name of the robot")
+  
+  robot_news_station_node = Node(
+    package = "my_py_pkg",
+    executable="robot_news_station",
+    name = "robot_news_station",
+    parameters=[{"robot_name": LaunchConfiguration("robot_name")}],
+    remappings=[("/robot_news", "/robot_news_v2")],)
+  
+  smartphone_node = Node(
+    package="my_py_pkg",
+    executable="smartphone",
+    name="smartphone",
+    remappings=[("/robot_news", "/robot_news_v2")],)
+  
+  service_server_node = Node(
+    package="my_py_pkg",
+    executable="service_server",
+    name="service_server",
+  )
+
+  return LaunchDescription([
+    robot_name_arg,
+    robot_news_station_node,
+    smartphone_node,
+    service_server_node
+  ])
+```
+
+CLI
+
+```bash
+ros2 launch my_robot_bringup bringup.launch.py
+ros2 service call /add_two_ints my_robot_interfaces/srv/AddTwoInts "{a: 5, b: 7}"
+```
