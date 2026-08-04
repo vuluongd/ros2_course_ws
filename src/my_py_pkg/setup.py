@@ -31,7 +31,10 @@ setup(
             "robot_news_station = my_py_pkg.robot_news_station:main",
             "smartphone = my_py_pkg.smartphone:main",
             "service_server = my_py_pkg.service_server:main",
-            "service_client = my_py_pkg.service_client:main"
+            "service_client = my_py_pkg.service_client:main",
+            'static_frame_publisher = my_py_pkg.static_frame_publisher:main',
+            'dynamic_frame_publisher = my_py_pkg.static_frame_publisher:main',
+            'tf_listener = my_py_pkg.tf_listener:main'
         ],
     }, 
 )
