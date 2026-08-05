@@ -1386,3 +1386,68 @@ Create `my_robot_description/urdf/my_robot.urdf`:
   </joint>
 </robot>
 ```
+
+### 7.3 Joint Types
+
+| Type | Description | Example |
+| ------ | ------------- | --------- |
+| `fixed` | No movement | Camera Mount |
+| `continuóus` | Rotates freely (no limit) | Wheel |
+| `revolute` | Rotates within limits | Robotic arm joint |
+| `prismatic` | Slides linearly | Elevator lift |
+| `floating` | 6 DOF | Free-floating body |
+
+### 7.4 Computing Inertia Values
+
+For a **box** (mass m, dimensions l×w×h):
+
+```
+ixx = m/12 * (h² + w²)
+iyy = m/12 * (h² + l²)
+izz = m/12 * (l² + w²)
+```
+
+For a **cylinder** (mass m, radius r, length l):
+
+```
+ixx = iyy = m/12 * (3r² + l²)
+izz = m/2 * r²
+```
+
+### 7.5  Robot State Publisher
+
+The `robot_state_publisher` node:
+
+1. Reads the URDF from the `/robot_description` parameter
+
+2. Listens to `/joint_states` for moving joints
+
+3. Broadcasts the full TF tree
+
+```python
+# In a launch file:
+from launch_ros.parameter_descriptions import ParameterValue
+from launch.substitutions import Command
+
+robot_description = ParameterValue(
+    Command(["xacro ", urdf_file_path]),
+    value_type=str
+)
+
+robot_state_publisher_node = Node(
+    package="robot_state_publisher",
+    executable="robot_state_publisher",
+    parameters=[{"robot_description": robot_description}]
+)
+```
+
+### 7.6 Verify in RViz
+
+```bash
+ros2 launch my_robot_description display.launch.py
+```
+
+In RViz: add RobotModel display, set Fixed Frame to base_link, and add TF display.
+
+Activity 7
+Model a differential drive robot with: base box (0.5×0.3×0.15 m), two driven wheels (r=0.1 m), and one caster sphere (r=0.05 m) at the front. Add proper collision and inertia to all links. Visualize it in RViz.

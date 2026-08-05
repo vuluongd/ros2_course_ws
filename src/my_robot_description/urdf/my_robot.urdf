@@ -1,4 +1,4 @@
-<?xml version = 1.0>
+<?xml version = "1.0"?>
 <robot name = "my_robot">
 
   <!-- ===== BASE LINK ===== -->
@@ -7,8 +7,8 @@
       <geometry>
         <box size="0.6 0.4 0.2"/>
       </geometry>
-      <origin xyz ="0 0 0.1", rpy="0 0 0"/>
-      <material>
+      <origin xyz ="0 0 0.1" rpy="0 0 0"/>
+      <material name="blue">
         <color rgba="0 0 0.8 1"/>
       </material>
     </visual>
@@ -16,12 +16,12 @@
       <geometry>
         <box size="0.6 0.4 0.2"/>
       </geometry>
-      <origin xyz="0 0 0.1", rpy="0 0 0"/>
+      <origin xyz="0 0 0.1" rpy="0 0 0"/>
     </collision>
     <inertial>
       <mass value = "5.0"/>
-      <origin xyz="0 0 0.1", rpy="0 0 0"/>
-      <inertia ixx="0.0458" ixy="0" ixz="0" iyy="0.0875" iyz = "0" ixz="0.1208"/>
+      <origin xyz="0 0 0.1" rpy="0 0 0"/>
+      <inertia ixx="0.0458" ixy="0" ixz="0" iyy="0.0875" iyz = "0" izz="0.1208"/>
     </inertial>
   </link>
 
@@ -29,9 +29,9 @@
   <link name = "left_wheel">
     <visual>
       <geometry>
-        <cylinder radius="0.1", length="0.05"/>
+        <cylinder radius="0.1" length="0.05"/>
       </geometry>
-      <origin xyz="0 0 0", rpy="1.5707 0 0"/>
+      <origin xyz="0 0 0" rpy="1.5707 0 0"/>
       <material name="dark_grey">
         <color rgba="0.3 0.3 0.3 1"/>
       </material>
