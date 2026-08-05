@@ -1299,3 +1299,90 @@ int main(int argc, char **argv)
     return 0;
 }
 ```
+
+## Module 7 — URDF & Robot Modeling
+
+### Learning Objectives
+
+- Understand what URDF is and how it represents a robot
+- Write links with visual, collision, and inertia
+- Write joints (fixed, revolute, continuous, prismatic)
+- View your robot in rviz with the Robot State Publisher
+
+### 7.1 What is URDF ?
+
+URDF (Unified Robot Description Format) is an XML format for describing robot geometry, kinematic, dynamics
+
+```
+robot
+├── link: base_link
+├── link: left_wheel
+├── link: right_wheel
+├── joint: base_left_wheel_joint  (connects base_link → left_wheel)
+└── joint: base_right_wheel_joint (connects base_link → right_wheel)
+```
+
+### 7.2 Basic URDF Structure
+
+Create `my_robot_description/urdf/my_robot.urdf`:
+
+```xml
+<?xml version = 1.0>
+<robot name = "my_robot">
+
+  <!-- ===== BASE LINK ===== -->
+  <link name = "base_link">
+    <visual>
+      <geometry>
+        <box size="0.6 0.4 0.2"/>
+      </geometry>
+      <origin xyz ="0 0 0.1", rpy="0 0 0"/>
+      <material>
+        <color rgba="0 0 0.8 1"/>
+      </material>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.6 0.4 0.2"/>
+      </geometry>
+      <origin xyz="0 0 0.1", rpy="0 0 0"/>
+    </collision>
+    <inertial>
+      <mass value = "5.0"/>
+      <origin xyz="0 0 0.1", rpy="0 0 0"/>
+      <inertia ixx="0.0458" ixy="0" ixz="0" iyy="0.0875" iyz = "0" ixz="0.1208"/>
+    </inertial>
+  </link>
+
+  <!-- ===== LEFT WHEEL ===== -->
+  <link name = "left_wheel">
+    <visual>
+      <geometry>
+        <cylinder radius="0.1", length="0.05"/>
+      </geometry>
+      <origin xyz="0 0 0", rpy="1.5707 0 0"/>
+      <material name="dark_grey">
+        <color rgba="0.3 0.3 0.3 1"/>
+      </material>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder radius="0.1" length="0.05"/>
+      </geometry>
+      <origin  xyz="0 0 0" rpy="1.5707 0 0"/>
+    </collision>
+    <inertial>
+      <mass value="0.5"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="0.00058" ixy="0" ixz="0" iyy="0.00058" iyz="0" izz="0.00125"/>
+    </inertial>
+  </link>
+  <!-- ===== BASE → LEFT WHEEL JOINT ===== -->
+  <joint name="base_left_wheel_joint" type="continuous">
+    <parent link="base_link"/>
+    <child link="left_wheel"/>
+    <origin xyz="-0.15 0.225 0" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+  </joint>
+</robot>
+```
