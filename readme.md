@@ -1451,3 +1451,229 @@ In RViz: add RobotModel display, set Fixed Frame to base_link, and add TF displa
 
 Activity 7
 Model a differential drive robot with: base box (0.5×0.3×0.15 m), two driven wheels (r=0.1 m), and one caster sphere (r=0.05 m) at the front. Add proper collision and inertia to all links. Visualize it in RViz.
+
+tree
+
+```
+/home/lunog/ros2_course_ws/src/activity7
+├── CMakeLists.txt
+├── include
+│   └── activity7
+├── launch
+│   └── display.launch.py
+├── package.xml
+├── src
+└── urdf
+    └── my_robot.urdf
+
+6 directories, 4 files
+
+```
+
+`urdf/my_robot.urdf`
+
+```xml
+<?xml version="1.0"?>
+
+<robot name="my_robot">
+
+  <!-- ================= BASE LINK ================= -->
+  <link name="base_link">
+
+    <visual>
+      <origin xyz="0 0 0.075" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.5 0.3 0.15"/>
+      </geometry>
+      <material name="blue">
+        <color rgba="0 0 0.8 1"/>
+      </material>
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0.075" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.5 0.3 0.15"/>
+      </geometry>
+    </collision>
+
+    <inertial>
+      <origin xyz="0 0 0.075" rpy="0 0 0"/>
+      <mass value="5.0"/>
+      <inertia
+        ixx="0.0469"
+        ixy="0"
+        ixz="0"
+        iyy="0.1151"
+        iyz="0"
+        izz="0.1417"/>
+    </inertial>
+
+  </link>
+
+  <!-- ================= LEFT WHEEL ================= -->
+  <link name="left_wheel">
+
+    <visual>
+      <origin xyz="0 0 0" rpy="1.5708 0 0"/>
+      <geometry>
+        <cylinder radius="0.1" length="0.05"/>
+      </geometry>
+      <material name="dark_grey">
+        <color rgba="0.3 0.3 0.3 1"/>
+      </material>
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0" rpy="1.5708 0 0"/>
+      <geometry>
+        <cylinder radius="0.1" length="0.05"/>
+      </geometry>
+    </collision>
+
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="0.5"/>
+      <inertia
+        ixx="0.00135"
+        ixy="0"
+        ixz="0"
+        iyy="0.00135"
+        iyz="0"
+        izz="0.00250"/>
+    </inertial>
+
+  </link>
+
+  <!-- ================= RIGHT WHEEL ================= -->
+  <link name="right_wheel">
+
+    <visual>
+      <origin xyz="0 0 0" rpy="1.5708 0 0"/>
+      <geometry>
+        <cylinder radius="0.1" length="0.05"/>
+      </geometry>
+      <material name="dark_grey">
+        <color rgba="0.3 0.3 0.3 1"/>
+      </material>
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0" rpy="1.5708 0 0"/>
+      <geometry>
+        <cylinder radius="0.1" length="0.05"/>
+      </geometry>
+    </collision>
+
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="0.5"/>
+      <inertia
+        ixx="0.00135"
+        ixy="0"
+        ixz="0"
+        iyy="0.00135"
+        iyz="0"
+        izz="0.00250"/>
+    </inertial>
+
+  </link>
+
+  <!-- ================= CASTER WHEEL ================= -->
+  <link name="caster_wheel">
+
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <sphere radius="0.05"/>
+      </geometry>
+      <material name="black">
+        <color rgba="0.1 0.1 0.1 1"/>
+      </material>
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <sphere radius="0.05"/>
+      </geometry>
+    </collision>
+
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="0.2"/>
+      <inertia
+        ixx="0.00020"
+        ixy="0"
+        ixz="0"
+        iyy="0.00020"
+        iyz="0"
+        izz="0.00020"/>
+    </inertial>
+
+  </link>
+
+  <!-- ================= LEFT WHEEL JOINT ================= -->
+  <joint name="base_left_wheel_joint" type="continuous">
+    <parent link="base_link"/>
+    <child link="left_wheel"/>
+    <origin xyz="0 -0.175 0.1" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+  </joint>
+
+  <!-- ================= RIGHT WHEEL JOINT ================= -->
+  <joint name="base_right_wheel_joint" type="continuous">
+    <parent link="base_link"/>
+    <child link="right_wheel"/>
+    <origin xyz="0 0.175 0.1" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+  </joint>
+
+  <!-- ================= CASTER JOINT ================= -->
+  <joint name="caster_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="caster_wheel"/>
+    <origin xyz="0.2 0 -0.075" rpy="0 0 0"/>
+  </joint>
+
+</robot>
+```
+
+`launch/display.launch.py`
+
+```python
+from pathlib import Path
+
+from launch import LaunchDescription
+from launch_ros.actions import Node
+from ament_index_python.packages import get_package_share_directory
+
+
+def generate_launch_description():
+
+    package_path = get_package_share_directory("activity7")
+    urdf_path = Path(package_path) / "urdf" / "my_robot.urdf"
+
+    robot_description = {
+        "robot_description": urdf_path.read_text()
+    }
+
+    return LaunchDescription([
+
+        Node(
+            package="robot_state_publisher",
+            executable="robot_state_publisher",
+            parameters=[robot_description]
+        ),
+
+        Node(
+            package="joint_state_publisher_gui",
+            executable="joint_state_publisher_gui"
+        ),
+
+        Node(
+            package="rviz2",
+            executable="rviz2"
+        ),
+    ])
+```

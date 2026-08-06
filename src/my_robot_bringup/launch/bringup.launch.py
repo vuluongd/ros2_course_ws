@@ -28,6 +28,8 @@ def generate_launch_description():
     name="service_server",
   )
 
+  
+
   return LaunchDescription([
     robot_name_arg,
     robot_news_station_node,
