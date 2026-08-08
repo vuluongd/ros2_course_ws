@@ -26,7 +26,7 @@ install(
   DIRECTORY
     launch
     urdf
+    world
   DESTINATION share/${PROJECT_NAME}
 )
-
 ament_package()
